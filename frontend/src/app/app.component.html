@@ -38,7 +38,7 @@
       <button
         class="choice-btn red"
         (click)="choose('red')"
-        aria-label="Choose Red — guaranteed money for you"
+        aria-label="Choose Red — guaranteed life for you"
       >
         <span class="btn-glow"></span>
         <span class="btn-icon">●</span>
@@ -139,7 +139,7 @@
           >No votes yet — be the first to decide.</span
         >
         <span *ngIf="results.total > 0 && results.blueWins">
-          ✦ Blue surpasses 50% — everyone gets money
+          ✦ Blue surpasses 50% — everyone gets to live
         </span>
         <span *ngIf="results.total > 0 && !results.blueWins">
           ✦ Blue needs {{ blueNeeded }}% more to reach the threshold
