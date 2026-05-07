@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+.npm
+
+# Build outputs
+dist/
+out-tsc/
+
+# Environment & secrets
+.env
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Angular cache
+.angular/
