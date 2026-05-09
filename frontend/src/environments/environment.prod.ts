@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  // Replace with your production API URL, e.g. 'https://api.yourdomain.com/api'
-  apiUrl: "https://redorblue-production.up.railway.app/api",
+  supabaseUrl: 'https://YOUR_PROJECT_ID.supabase.co',       // ← replace
+  supabaseAnonKey: 'YOUR_ANON_KEY',                         // ← replace
 };

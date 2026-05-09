@@ -1,4 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: "https://redorblue-production.up.railway.app/api",
+  supabaseUrl: 'https://YOUR_PROJECT_ID.supabase.co',       // ← replace
+  supabaseAnonKey: 'YOUR_ANON_KEY',                         // ← replace
 };
