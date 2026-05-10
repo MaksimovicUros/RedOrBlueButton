@@ -2,36 +2,41 @@
 -- Run this in Supabase Dashboard → SQL Editor → New Query
 -- ================================================================
 
--- 1. Create the votes table
+-- 1. Votes table
 CREATE TABLE IF NOT EXISTS votes (
   id         BIGSERIAL    PRIMARY KEY,
   email      TEXT         NOT NULL UNIQUE,
   choice     TEXT         NOT NULL CHECK (choice IN ('red', 'blue')),
+  notify     BOOLEAN      NOT NULL DEFAULT FALSE,
   created_at TIMESTAMPTZ  DEFAULT NOW()
 );
 
--- 2. Index for fast email lookups (duplicate check)
+-- If table already exists, just add notify column:
+-- ALTER TABLE votes ADD COLUMN IF NOT EXISTS notify BOOLEAN NOT NULL DEFAULT FALSE;
+
+-- 2. Indexes
 CREATE INDEX IF NOT EXISTS idx_votes_email  ON votes (email);
 CREATE INDEX IF NOT EXISTS idx_votes_choice ON votes (choice);
+CREATE INDEX IF NOT EXISTS idx_votes_notify ON votes (notify) WHERE notify = TRUE;
 
--- 3. Enable Row Level Security (locks down the table)
+-- 3. Row Level Security
 ALTER TABLE votes ENABLE ROW LEVEL SECURITY;
 
--- 4. Allow anyone to READ votes (needed to show results)
+-- 4. Anyone can read (for showing results)
 CREATE POLICY "Public can read votes"
   ON votes FOR SELECT
   USING (true);
 
--- 5. Allow anyone to INSERT a vote (uniqueness enforced by DB constraint)
-CREATE POLICY "Public can insert votes"
+-- 5. Only authenticated users can vote, and only with their own email
+--    This means Google-verified emails only — no fake emails possible
+CREATE POLICY "Authenticated users can vote with own email"
   ON votes FOR INSERT
-  WITH CHECK (true);
+  TO authenticated
+  WITH CHECK (auth.email() = email);
 
--- UPDATE and DELETE have no policies = blocked for everyone by default ✓
-
--- 6. Enable Realtime for instant result updates
+-- 6. Enable Realtime
 ALTER PUBLICATION supabase_realtime ADD TABLE votes;
 
 -- ================================================================
--- Done! Your database is ready.
+-- Done!
 -- ================================================================
