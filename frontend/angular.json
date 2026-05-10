@@ -25,7 +25,10 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               { "glob": "**/*", "input": "src/assets", "output": "assets" },
-              { "glob": "favicon.ico", "input": "src", "output": "" }
+              { "glob": "favicon.ico", "input": "src", "output": "" },
+              { "glob": "**/*", "input": "src/assets", "output": "assets" },
+              { "glob": "robots.txt", "input": "src", "output": "" },
+              { "glob": "sitemap.xml", "input": "src", "output": "" }
             ],
             "styles": ["src/styles.scss"],
             "scripts": []
